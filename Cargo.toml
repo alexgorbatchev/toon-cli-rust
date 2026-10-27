@@ -1,0 +1,17 @@
+[package]
+name = "toon-cli"
+version = "0.1.0"
+edition = "2024"
+description = "Ordered JSON, JSONC, and NDJSON to TOON conversion"
+license = "MIT"
+
+[[bin]]
+name = "toon"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1.0.102"
+cli-command-kit = { path = "../cli-command-kit" }
+jsonc-parser = "=0.34.0"
+serde_json = { version = "1.0.149", features = ["raw_value", "preserve_order"] }
+serde_toon_format = "=0.2.0"
