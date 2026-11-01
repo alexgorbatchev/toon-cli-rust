@@ -156,7 +156,7 @@ fn native_help_skill_and_raw_version_work_without_input() {
         );
         assert_eq!(
             invoke(&["toon", "skill"], b"", true, mode).1,
-            help_options().skill.unwrap().as_bytes()
+            INSTALL_TEXT.as_bytes()
         );
         for args in [
             vec!["toon", "--help"],
@@ -272,3 +272,5 @@ fn native_executable_converts_pipes_and_reports_once() {
     assert!(result.stdout.is_empty());
     assert_eq!(String::from_utf8(result.stderr).unwrap().lines().count(), 1);
 }
+
+const INSTALL_TEXT: &str = "Install the toon skill using the Skills CLI:\n\n  npx skills add alexgorbatchev/toon-cli --skill toon\n\nSkill:\n\n  https://github.com/alexgorbatchev/toon-cli/tree/main/skills/toon\n";

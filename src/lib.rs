@@ -10,8 +10,6 @@ use std::{
     io::{Read, Write},
 };
 
-const SKILL: &str = "Install the toon skill using the Skills CLI:\n\n  npx skills add alexgorbatchev/toon-cli --skill toon\n\nSkill:\n\n  https://github.com/alexgorbatchev/toon-cli/tree/main/skills/toon\n";
-
 pub fn command() -> Command {
     Command::new("toon")
         .about("Convert piped JSON, JSONC, or NDJSON into TOON")
@@ -27,7 +25,10 @@ pub fn command() -> Command {
 
 pub fn help_options() -> HelpOptions {
     HelpOptions {
-        skill: Some(SKILL.into()),
+        skill: Some(
+            cli_command_kit::SkillSource::new("alexgorbatchev/toon-cli", "main")
+                .expect("the fixed skill source names a GitHub repository"),
+        ),
         ..HelpOptions::default()
     }
 }
@@ -123,7 +124,7 @@ fn perform(
     terminal: bool,
     output: &mut impl Write,
 ) -> Result<()> {
-    if cli_command_kit::write_skill(matches, options, output)? {
+    if cli_command_kit::write_skill(&command(), matches, options, output)? {
         return Ok(());
     }
     if matches.get_flag("version") {
